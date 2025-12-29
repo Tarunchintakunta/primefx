@@ -1,5 +1,6 @@
 import Navigation from '@/components/Navigation';
 import HeroClone from '@/components/HeroClone';
+import OurProducts from '@/components/OurProducts';
 import StatsRow from '@/components/StatsRow';
 import ServicesGrid from '@/components/ServicesGrid';
 import InfrastructureSection from '@/components/InfrastructureSection';
@@ -14,6 +15,9 @@ export default function Home() {
       
       {/* Hero Section with 3D Dashboard */}
       <HeroClone />
+
+      {/* Our Products Section */}
+      <OurProducts />
       
       {/* Key Statistics */}
       <StatsRow />
