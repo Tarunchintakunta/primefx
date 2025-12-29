@@ -37,7 +37,7 @@ export default function OurProducts() {
           
           {/* Description */}
           <p className="text-white/60 text-lg leading-relaxed mb-12 max-w-3xl">
-            Confidently trade with PrimeFX's cutting-edge trading platforms offering 
+            Confidently trade with PrimeFX&apos;s cutting-edge trading platforms offering 
             groundbreaking levels of stability and reliability. Subscribe and execute 
             on the tightest pricing and liquidity from top-tier Banks and Prime Brokers.
           </p>
@@ -49,7 +49,7 @@ export default function OurProducts() {
                 key={product}
                 onClick={() => setActiveTab(product)}
                 className={`
-                  px-10 py-4 rounded-xl font-bold text-base transition-all duration-300 tracking-wide
+                  px-8 py-3.5 rounded-full font-bold text-sm sm:text-base transition-all duration-300 tracking-wide
                   ${activeTab === product 
                     ? 'bg-white text-[#2E21DE] shadow-[0_0_30px_rgba(255,255,255,0.3)] scale-105 z-10' 
                     : 'bg-[#0a0a2e]/40 text-white/80 hover:bg-[#0a0a2e]/60 hover:text-white border border-white/10 backdrop-blur-sm hover:border-white/30'}
