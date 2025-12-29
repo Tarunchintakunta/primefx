@@ -105,16 +105,16 @@ function ForexCard({ pair, price, change, isPositive }: { pair: string, price: s
   );
 }
 
-// Floating Donut Component
-interface FloatingDonutProps {
+// Floating Ticker Coin Component
+interface FloatingTickerProps {
   position: [number, number, number];
   rotation: [number, number, number];
-  scale: [number, number, number];
+  symbol: string;
   color: string;
   delay?: number;
 }
 
-function FloatingDonut({ position, rotation, scale, color, delay = 0 }: FloatingDonutProps) {
+function FloatingTicker({ position, rotation, symbol, color, delay = 0 }: FloatingTickerProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   
   useFrame((state) => {
@@ -127,19 +127,48 @@ function FloatingDonut({ position, rotation, scale, color, delay = 0 }: Floating
 
   return (
     <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-      <mesh ref={meshRef} position={position} scale={scale}>
-        <torusGeometry args={[0.6, 0.2, 32, 64]} />
-        <MeshTransmissionMaterial
-          transmission={0.9}
-          roughness={0.1}
-          thickness={0.5}
-          ior={1.5}
-          chromaticAberration={0.04}
-          color={color}
-          transparent
-          opacity={0.8}
-        />
-      </mesh>
+      <group position={position} rotation={[Math.PI / 2, 0, 0]}>
+        {/* Coin Shape */}
+        <mesh ref={meshRef}>
+          <cylinderGeometry args={[0.6, 0.6, 0.1, 32]} />
+          <MeshTransmissionMaterial
+            transmission={0.95}
+            roughness={0.1}
+            thickness={0.5}
+            ior={1.5}
+            chromaticAberration={0.04}
+            color={color}
+            transparent
+            opacity={0.8}
+          />
+        </mesh>
+        
+        {/* Text on Front */}
+        <Text 
+          position={[0, 0.1, 0]} 
+          rotation={[-Math.PI / 2, 0, 0]} 
+          fontSize={0.35} 
+          color="white" 
+          anchorX="center" 
+          anchorY="middle"
+          fontWeight="bold"
+        >
+          {symbol}
+        </Text>
+        
+        {/* Text on Back (Reverse) */}
+        <Text 
+          position={[0, -0.1, 0]} 
+          rotation={[Math.PI / 2, 0, 0]} 
+          fontSize={0.35} 
+          color="white" 
+          anchorX="center" 
+          anchorY="middle"
+          fontWeight="bold"
+        >
+          {symbol}
+        </Text>
+      </group>
     </Float>
   );
 }
@@ -178,10 +207,13 @@ function DashboardScene() {
       <pointLight position={[5, -5, 5]} intensity={1} color="#A855F7" />
 
       <group rotation={[0.1, -0.3, 0]}>
-        {/* Floating Donuts - "Crazy Neat" */}
-        <FloatingDonut position={[-3.5, 2, -2]} rotation={[0.5, 0, 0]} scale={[1.2, 1.2, 1.2]} color="#A855F7" delay={0} />
-        <FloatingDonut position={[3.5, -2, -1]} rotation={[-0.5, 0.5, 0]} scale={[1.5, 1.5, 1.5]} color="#22D3EE" delay={1} />
-        <FloatingDonut position={[4, 2, -3]} rotation={[0, 0, 0.5]} scale={[0.8, 0.8, 0.8]} color="#F472B6" delay={2} />
+        {/* Floating Tickers - Coins/Logos */}
+        {/* Gold (XAU) */}
+        <FloatingTicker position={[-3.5, 2, -2]} rotation={[0.5, 0, 0]} symbol="Au" color="#FFD700" delay={0} />
+        {/* Tesla (TSLA) */}
+        <FloatingTicker position={[3.5, -2, -1]} rotation={[-0.5, 0.5, 0]} symbol="TSLA" color="#E31937" delay={1} />
+        {/* Bitcoin (BTC) */}
+        <FloatingTicker position={[4, 2, -3]} rotation={[0, 0, 0.5]} symbol="₿" color="#F7931A" delay={2} />
 
         {/* Main Central Panel */}
         <DashboardPanel 
